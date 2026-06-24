@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.vet
+package org.springframework.samples.petclinic.clinic
 
 import org.hamcrest.xml.HasXPath.hasXPath
 import org.junit.jupiter.api.BeforeEach
@@ -7,6 +7,9 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.BDDMockito.given
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest
+import org.springframework.samples.petclinic.vet.Specialty
+import org.springframework.samples.petclinic.vet.Vet
+import org.springframework.samples.petclinic.vet.VetRepository
 import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.http.MediaType
 import org.springframework.test.context.junit.jupiter.SpringExtension
@@ -15,11 +18,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 /**
- * Test class for the [VetController]
+ * Test class for the [ClinicController]
  */
 @ExtendWith(SpringExtension::class)
-@WebMvcTest(VetController::class)
-class VetControllerTest {
+@WebMvcTest(ClinicController::class)
+class ClinicControllerTest {
 
     @Autowired
     lateinit private var mockMvc: MockMvc
