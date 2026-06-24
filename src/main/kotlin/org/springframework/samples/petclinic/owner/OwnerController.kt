@@ -38,11 +38,17 @@ class OwnerController(val owners: OwnerRepository, val visits: VisitRepository) 
 
     val VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm"
 
+    /**
+     * Prevents request parameters from binding directly to owner IDs.
+     */
     @InitBinder
     fun setAllowedFields(dataBinder: WebDataBinder) {
         dataBinder.setDisallowedFields("id")
     }
 
+    /**
+     * Prepares the owner creation form with an empty owner.
+     */
     @GetMapping("/owners/new")
     fun initCreationForm(model: MutableMap<String, Any>): String {
         val owner = Owner()
@@ -50,6 +56,9 @@ class OwnerController(val owners: OwnerRepository, val visits: VisitRepository) 
         return VIEWS_OWNER_CREATE_OR_UPDATE_FORM
     }
 
+    /**
+     * Validates and saves a newly submitted owner.
+     */
     @PostMapping("/owners/new")
     fun processCreationForm(@Valid owner: Owner, result: BindingResult): String {
         return if (result.hasErrors()) {
@@ -60,12 +69,18 @@ class OwnerController(val owners: OwnerRepository, val visits: VisitRepository) 
         }
     }
 
+    /**
+     * Initializes the owner search form.
+     */
     @GetMapping("/owners/find")
     fun initFindForm(model: MutableMap<String, Any>): String {
         model["owner"] = Owner()
         return "owners/findOwners"
     }
 
+    /**
+     * Searches owners by last name and routes to the matching result view.
+     */
     @GetMapping("/owners")
     fun processFindForm(owner: Owner, result: BindingResult, model: MutableMap<String, Any>): String {
         // find owners by last name
@@ -88,6 +103,9 @@ class OwnerController(val owners: OwnerRepository, val visits: VisitRepository) 
         }
     }
 
+    /**
+     * Loads an existing owner into the create/update form for editing.
+     */
     @GetMapping("/owners/{ownerId}/edit")
     fun initUpdateOwnerForm(@PathVariable("ownerId") ownerId: Int, model: Model): String {
         val owner = owners.findById(ownerId)
@@ -95,6 +113,9 @@ class OwnerController(val owners: OwnerRepository, val visits: VisitRepository) 
         return VIEWS_OWNER_CREATE_OR_UPDATE_FORM
     }
 
+    /**
+     * Validates and saves changes to an existing owner.
+     */
     @PostMapping("/owners/{ownerId}/edit")
     fun processUpdateOwnerForm(@Valid owner: Owner, result: BindingResult, @PathVariable("ownerId") ownerId: Int): String {
         return if (result.hasErrors()) {
@@ -107,10 +128,7 @@ class OwnerController(val owners: OwnerRepository, val visits: VisitRepository) 
     }
 
     /**
-     * Custom handler for displaying an owner.
-     *
-     * @param ownerId the ID of the owner to display
-     * @return the view
+     * Displays an owner and loads each pet's visits for the details view.
      */
     @GetMapping("/owners/{ownerId}")
     fun showOwner(@PathVariable("ownerId") ownerId: Int, model: Model): String {
@@ -123,4 +141,3 @@ class OwnerController(val owners: OwnerRepository, val visits: VisitRepository) 
     }
 
 }
-

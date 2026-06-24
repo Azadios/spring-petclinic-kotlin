@@ -37,23 +37,38 @@ class PetController(val pets: PetRepository, val owners: OwnerRepository) {
 
     private val VIEWS_PETS_CREATE_OR_UPDATE_FORM = "pets/createOrUpdatePetForm"
 
+    /**
+     * Adds all available pet types to the model for pet form selection lists.
+     */
     @ModelAttribute("types")
     fun populatePetTypes(): Collection<PetType> = this.pets.findPetTypes()
 
+    /**
+     * Loads the owner identified by the path so pet requests can bind within that owner context.
+     */
     @ModelAttribute("owner")
     fun findOwner(@PathVariable("ownerId") ownerId: Int): Owner
             = owners.findById(ownerId)
 
+    /**
+     * Prevents request parameters from binding directly to the owner ID.
+     */
     @InitBinder("owner")
     fun initOwnerBinder(dataBinder: WebDataBinder) {
         dataBinder.setDisallowedFields("id")
     }
 
+    /**
+     * Registers the custom validator used for pet create and update forms.
+     */
     @InitBinder("pet")
     fun initPetBinder(dataBinder: WebDataBinder) {
         dataBinder.validator = PetValidator()
     }
 
+    /**
+     * Prepares a new pet form and associates the empty pet with the current owner.
+     */
     @GetMapping("/pets/new")
     fun initCreationForm(owner: Owner, model: Model): String {
         val pet = Pet()
@@ -62,6 +77,9 @@ class PetController(val pets: PetRepository, val owners: OwnerRepository) {
         return VIEWS_PETS_CREATE_OR_UPDATE_FORM
     }
 
+    /**
+     * Validates and saves a new pet for the current owner, rejecting duplicate pet names.
+     */
     @PostMapping("/pets/new")
     fun processCreationForm(owner: Owner, @Valid pet: Pet, result: BindingResult, model: Model): String {
         if (StringUtils.hasLength(pet.name) && pet.isNew && owner.getPet(pet.name!!, true) != null) {
@@ -77,6 +95,9 @@ class PetController(val pets: PetRepository, val owners: OwnerRepository) {
         }
     }
 
+    /**
+     * Loads an existing pet into the create/update form for editing.
+     */
     @GetMapping("/pets/{petId}/edit")
     fun initUpdateForm(@PathVariable petId: Int, model: Model): String {
         val pet = pets.findById(petId)
@@ -84,6 +105,9 @@ class PetController(val pets: PetRepository, val owners: OwnerRepository) {
         return VIEWS_PETS_CREATE_OR_UPDATE_FORM
     }
 
+    /**
+     * Validates and saves changes to an existing pet under the current owner.
+     */
     @PostMapping("/pets/{petId}/edit")
     fun processUpdateForm(@Valid pet: Pet, result: BindingResult, owner: Owner, model: Model): String {
         return if (result.hasErrors()) {
