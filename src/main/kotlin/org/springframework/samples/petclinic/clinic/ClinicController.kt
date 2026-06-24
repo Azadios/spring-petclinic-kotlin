@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.vet
+package org.springframework.samples.petclinic.clinic
 
+import org.springframework.samples.petclinic.vet.VetRepository
+import org.springframework.samples.petclinic.vet.Vets
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ResponseBody
@@ -27,7 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody
  * @author Antoine Rey
  */
 @Controller
-class VetController(val vetRepository: VetRepository) {
+class ClinicController(val vetRepository: VetRepository) {
 
     @GetMapping("/vets.html")
     fun showHtmlVetList(model: MutableMap<String, Any>): String {
