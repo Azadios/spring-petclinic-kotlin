@@ -19,6 +19,8 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 
 /**
+ * Handles the intentional crash endpoint used to demonstrate error handling.
+ *
  * Controller used to showcase what happens when an exception is thrown
  *
  * @author Michael Isvy
