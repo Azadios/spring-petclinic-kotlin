@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.*
 import jakarta.validation.Valid
 
 /**
+ * Handles pet creation and update workflows within an owner context.
+ *
  * @author Juergen Hoeller
  * @author Ken Krebs
  * @author Arjen Poutsma
