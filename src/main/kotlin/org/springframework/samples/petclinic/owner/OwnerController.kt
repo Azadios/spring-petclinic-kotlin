@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.PostMapping
 import jakarta.validation.Valid
 
 /**
+ * Handles owner search, creation, update, and detail display workflows.
+ *
  * @author Juergen Hoeller
  * @author Ken Krebs
  * @author Arjen Poutsma
