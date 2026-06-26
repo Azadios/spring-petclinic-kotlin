@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.*
 import jakarta.validation.Valid
 
 /**
+ * Handles visit creation for pets in the owner workflow.
+ *
  * @author Juergen Hoeller
  * @author Ken Krebs
  * @author Arjen Poutsma
