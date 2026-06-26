@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ResponseBody
 
 /**
+ * Handles veterinarian list views and serialized vet list endpoints.
+ *
  * @author Juergen Hoeller
  * @author Mark Fisher
  * @author Ken Krebs
